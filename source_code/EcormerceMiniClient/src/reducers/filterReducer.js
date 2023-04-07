@@ -1,0 +1,52 @@
+const initState = {
+  categoryIdList: [],
+  price: ['0', '30'],
+  page: 1,
+  sort: '',
+  order: '',
+  limit: 6,
+};
+
+function filterReducer(state, action) {
+  switch (action.type) {
+    case 'add_category':
+      return {
+        ...state,
+        categoryIdList: [...state.categoryIdList, action.payload],
+        page: 1,
+      };
+    case 'delete_category':
+      return {
+        ...state,
+        categoryIdList: state.categoryIdList.filter((e) => e !== action.payload),
+        page: 1,
+      };
+    case 'set_price_filter':
+      return {
+        ...state,
+        price: [...action.payload],
+        page: 1,
+      };
+    case 'set_sort':
+      return {
+        ...state,
+        sort: action.payload[0],
+        order: action.payload[1],
+        page: 1,
+      };
+    case 'change_page':
+      return {
+        ...state,
+        page: action.payload,
+      };
+    case 'clear_filter':
+      return {
+        ...initState,
+      };
+    default:
+      throw new Error('Invalid action');
+  }
+}
+
+export { initState };
+export default filterReducer;
